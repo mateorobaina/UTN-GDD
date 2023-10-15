@@ -1,0 +1,641 @@
+-- Creación de la base de datos
+CREATE DATABASE RADIUM;
+GO
+
+-- Usar la base de datos recién creada
+USE RADIUM;
+GO
+
+-- Creación del esquema
+CREATE SCHEMA RADIUM;
+GO
+
+-- Creación de la tabla Sucursal
+CREATE TABLE RADIUM.Sucursal (
+    SUCURSAL_CODIGO INT PRIMARY KEY,
+    SUCURSAL_NOMBRE NVARCHAR(255),
+    SUCURSAL_DIRECCION NVARCHAR(255),
+    SUCURSAL_TELEFONO NVARCHAR(20),
+    SUCURSAL_LOCALIDAD NVARCHAR(255),
+    SUCURSAL_PROVINCIA NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Inmueble
+CREATE TABLE RADIUM.Inmueble (
+    INMUEBLE_CODIGO INT PRIMARY KEY,
+    INMUEBLE_NOMBRE NVARCHAR(255),
+    INMUEBLE_DESCRIPCION NVARCHAR(MAX),
+    INMUEBLE_DIRECCION NVARCHAR(255),
+    INMUEBLE_SUPERFICIETOTAL DECIMAL(10, 2),
+    INMUEBLE_ANTIGUEDAD INT,
+    INMUEBLE_EXPESAS DECIMAL(10, 2),
+    INMUEBLE_CARACTERISTICA_WIFI BIT,
+    INMUEBLE_CARACTERISTICA_CABLE BIT,
+    INMUEBLE_CARACTERISTICA_CALEFACCION BIT,
+    INMUEBLE_CARACTERISTICA_GAS BIT,
+    INMUEBLE_BARRIO NVARCHAR(255),
+    INMUEBLE_LOCALIDAD NVARCHAR(255),
+    INMUEBLE_PROVINCIA NVARCHAR(255),
+    INMUEBLE_TIPO_INMUEBLE NVARCHAR(255),
+    PROPIETARIO_CODIGO INT,
+    INMUEBLE_CANT_AMBIENTES INT,
+    INMUEBLE_ORIENTACION NVARCHAR(255),
+    INMUEBLE_DISPOSICION NVARCHAR(255),
+    INMUEBLE_ESTADO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Propietario
+CREATE TABLE RADIUM.Propietario (
+    PROPIETARIO_CODIGO INT PRIMARY KEY,
+    PROPIETARIO_NOMBRE NVARCHAR(255),
+    PROPIETARIO_APELLIDO NVARCHAR(255),
+    PROPIETARIO_DNI NVARCHAR(20),
+    PROPIETARIO_FECHA_REGISTRO DATETIME,
+    PROPIETARIO_TELEFONO NVARCHAR(20),
+    PROPIETARIO_MAIL NVARCHAR(255),
+    PROPIETARIO_FECHA_NAC DATETIME
+);
+GO
+
+-- Creación de la tabla Agente
+CREATE TABLE RADIUM.Agente (
+    AGENTE_CODIGO INT PRIMARY KEY,
+    AGENTE_NOMBRE NVARCHAR(255),
+    AGENTE_APELLIDO NVARCHAR(255),
+    AGENTE_DNI NVARCHAR(20),
+    AGENTE_FECHA_REGISTRO DATETIME,
+    AGENTE_TELEFONO NVARCHAR(20),
+    AGENTE_MAIL NVARCHAR(255),
+    AGENTE_FECHA_NAC DATETIME
+);
+GO
+
+-- Creación de la tabla Tipo_Operacion
+CREATE TABLE RADIUM.Tipo_Operacion (
+    TIPO_OPERACION_CODIGO INT PRIMARY KEY,
+    TIPO_OPERACION_NOMBRE NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Moneda
+CREATE TABLE RADIUM.Moneda (
+    MONEDA_CODIGO INT PRIMARY KEY,
+    MONEDA_NOMBRE NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Alquiler
+CREATE TABLE RADIUM.Alquiler (
+    ALQUILER_CODIGO INT PRIMARY KEY,
+    ALQUILER_FECHA_INICIO DATETIME,
+    ALQUILER_FECHA_FIN DATETIME,
+    ALQUILER_CANT_PERIODOS INT,
+    ALQUILER_DEPOSITO DECIMAL(10, 2),
+    ALQUILER_COMISION DECIMAL(10, 2),
+    ALQUILER_GASTOS_AVERIGUA DECIMAL(10, 2),
+    INQUILINO_CODIGO INT,
+    ALQUILER_ESTADO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Venta
+CREATE TABLE RADIUM.Venta (
+    VENTA_CODIGO INT PRIMARY KEY,
+    VENTA_FECHA DATETIME,
+    VENTA_PRECIO_VENTA DECIMAL(10, 2),
+    VENTA_COMISION DECIMAL(10, 2),
+    COMPRADOR_CODIGO INT,
+    VENTA_MONEDA INT
+);
+GO
+
+-- Creación de la tabla Pago_Alquiler
+CREATE TABLE RADIUM.Pago_Alquiler (
+    PAGO_ALQUILER_CODIGO INT PRIMARY KEY,
+    PAGO_ALQUILER_FECHA DATETIME,
+    PAGO_ALQUILER_FECHA_VENCIMIENTO DATETIME,
+    PAGO_ALQUILER_NRO_PERIODO INT,
+    PAGO_ALQUILER_DESC NVARCHAR(MAX),
+    PAGO_ALQUILER_FEC_INI DATETIME,
+    PAGO_ALQUILER_FEC_FIN DATETIME,
+    PAGO_ALQUILER_IMPORTE DECIMAL(10, 2),
+    PAGO_ALQUILER_MEDIO_PAGO INT
+);
+GO
+
+-- Creación de la tabla Pago_Venta
+CREATE TABLE RADIUM.Pago_Venta (
+    PAGO_VENTA_CODIGO INT PRIMARY KEY,
+    PAGO_VENTA_IMPORTE DECIMAL(10, 2),
+    PAGO_VENTA_MONEDA INT,
+    PAGO_VENTA_COTIZACION DECIMAL(10, 2),
+    PAGO_VENTA_MEDIO_PAGO INT
+);
+GO
+
+-- Creación de la tabla Detalle_Importe
+CREATE TABLE RADIUM.Detalle_Importe (
+    DETALLE_IMPORTE_CODIGO INT PRIMARY KEY,
+    DETALLE_IMPORTE_ALQUILER INT,
+    DETALLE_IMPORTE_PERIODO_INI DATETIME,
+    DETALLE_IMPORTE_PERIODO_FIN DATETIME,
+    DETALLE_IMPORTE_PRECIO DECIMAL(10, 2)
+);
+GO
+
+-- Creación de la tabla Comprador
+CREATE TABLE RADIUM.Comprador (
+    COMPRADOR_CODIGO INT PRIMARY KEY,
+    COMPRADOR_NOMBRE NVARCHAR(255),
+    COMPRADOR_APELLIDO NVARCHAR(255),
+    COMPRADOR_DNI NVARCHAR(20),
+    COMPRADOR_FECHA_REGISTRO DATETIME,
+    COMPRADOR_TELEFONO NVARCHAR(20),
+    COMPRADOR_MAIL NVARCHAR(255),
+    COMPRADOR_FECHA_NAC DATETIME
+);
+GO
+
+-- Creación de la tabla Inquilino
+CREATE TABLE RADIUM.Inquilino (
+    INQUILINO_CODIGO INT PRIMARY KEY,
+    INQUILINO_NOMBRE NVARCHAR(255),
+    INQUILINO_APELLIDO NVARCHAR(255),
+    INQUILINO_DNI NVARCHAR(20),
+    INQUILINO_FECHA_REGISTRO DATETIME,
+    INQUILINO_TELEFONO NVARCHAR(20),
+    INQUILINO_MAIL NVARCHAR(255),
+    INQUILINO_FECHA_NAC DATETIME
+);
+GO
+
+-- Creación de la tabla Tipo_Inmueble
+CREATE TABLE RADIUM.Tipo_Inmueble (
+    TIPO_INMUEBLE_CODIGO INT PRIMARY KEY,
+    TIPO_INMUEBLE_TIPO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Provincia
+CREATE TABLE RADIUM.Provincia (
+    PROVINCIA_CODIGO INT PRIMARY KEY,
+    PROVINCIA_NOMBRE NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Localidad
+CREATE TABLE RADIUM.Localidad (
+    LOCALIDAD_CODIGO INT PRIMARY KEY,
+    LOCALIDAD_NOMBRE NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Barrio
+CREATE TABLE RADIUM.Barrio (
+    BARRIO_CODIGO INT PRIMARY KEY,
+    BARRIO_NOMBRE NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla BarriosPorLocalidad
+CREATE TABLE RADIUM.BarriosPorLocalidad (
+    LOCALIDAD_CODIGO INT,
+    BARRIO_CODIGO INT
+);
+GO
+
+-- Creación de la tabla Ambientes
+CREATE TABLE RADIUM.Ambientes (
+    AMBIENTES_CODIGO INT PRIMARY KEY,
+    AMBIENTES_CANTIDAD INT
+);
+GO
+
+-- Creación de la tabla Disposicion
+CREATE TABLE RADIUM.Disposicion (
+    DISPOSICION_CODIGO INT PRIMARY KEY,
+    DISPOSICION_UBICACION NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Orientacion
+CREATE TABLE RADIUM.Orientacion (
+    ORIENTACION_CODIGO INT PRIMARY KEY,
+    ORIENTACION_CARDINAL NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Estado_Inmueble
+CREATE TABLE RADIUM.Estado_Inmueble (
+    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_TIPO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Estado_Anuncio
+CREATE TABLE RADIUM.Estado_Anuncio (
+    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_TIPO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Tipo_Periodo
+CREATE TABLE RADIUM.Tipo_Periodo (
+    TIPO_PERIODO_CODIGO INT PRIMARY KEY,
+    TIPO_PERIODO_TIPO NVARCHAR(255)
+);
+GO
+
+-- Creación de la tabla Estado_Alquiler
+CREATE TABLE RADIUM.Estado_Alquiler (
+    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_TIPO NVARCHAR(255)
+);
+GO
+
+-- Creación de las tablas intermedias para relaciones muchos a muchos (por ejemplo, Alquiler_Tipo_Operacion)
+CREATE TABLE RADIUM.Alquiler_Tipo_Operacion (
+    ALQUILER_CODIGO INT,
+    TIPO_OPERACION_CODIGO INT
+);
+GO
+
+-- Creación de las tablas intermedias para relaciones muchos a muchos (por ejemplo, Alquiler_Moneda)
+CREATE TABLE RADIUM.Alquiler_Moneda (
+    ALQUILER_CODIGO INT,
+    MONEDA_CODIGO INT
+);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (PROPIETARIO_CODIGO) REFERENCES RADIUM.Propietario(PROPIETARIO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (TIPO_INMUEBLE_CODIGO) REFERENCES RADIUM.Tipo_Inmueble(TIPO_INMUEBLE_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (LOCALIDAD_CODIGO) REFERENCES RADIUM.Localidad(LOCALIDAD_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.BarriosPorLocalidad
+ADD FOREIGN KEY (LOCALIDAD_CODIGO) REFERENCES RADIUM.Localidad(LOCALIDAD_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.BarriosPorLocalidad
+ADD FOREIGN KEY (BARRIO_CODIGO) REFERENCES RADIUM.Barrio(BARRIO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (ESTADO_INMUEBLE_CODIGO) REFERENCES RADIUM.Estado_Inmueble(ESTADO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (ESTADO_ANUNCIO_CODIGO) REFERENCES RADIUM.Estado_Anuncio(ESTADO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (ORIENTACION_CODIGO) REFERENCES RADIUM.Orientacion(ORIENTACION_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Alquiler
+ADD FOREIGN KEY (INQUILINO_CODIGO) REFERENCES RADIUM.Inquilino(INQUILINO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Venta
+ADD FOREIGN KEY (COMPRADOR_CODIGO) REFERENCES RADIUM.Comprador(COMPRADOR_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Alquiler
+ADD FOREIGN KEY (ALQUILER_MONEDA_CODIGO) REFERENCES RADIUM.Moneda(MONEDA_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Pago_Alquiler
+ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO_CODIGO) REFERENCES RADIUM.Medio_Pago(MEDIO_PAGO_CODIGO);
+GO
+
+-- Definición de claves foráneas para relaciones
+ALTER TABLE RADIUM.Pago_Venta
+ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO_CODIGO) REFERENCES RADIUM.Medio_Pago(MEDIO_PAGO_CODIGO);
+GO
+
+-- Define las claves foráneas para las demás relaciones entre tablas
+
+-- Creación de Stored Procedures para migrar datos
+
+-- Stored Procedure para migrar datos de la tabla Sucursal
+CREATE PROCEDURE RADIUM.MigrarDatosSucursal AS
+BEGIN
+    INSERT INTO RADIUM.Sucursal (
+        SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
+        SUCURSAL_LOCALIDAD, SUCURSAL_PROVINCIA
+    )
+    SELECT
+        SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
+        SUCURSAL_LOCALIDAD, SUCURSAL_PROVINCIA
+    FROM TablaMaestra_Sucursal;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Inmueble
+CREATE PROCEDURE RADIUM.MigrarDatosInmueble AS
+BEGIN
+    INSERT INTO RADIUM.Inmueble (
+        INMUEBLE_CODIGO, INMUEBLE_NOMBRE, INMUEBLE_DESCRIPCION, INMUEBLE_DIRECCION,
+        INMUEBLE_SUPERFICIETOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPESAS,
+        INMUEBLE_CARACTERISTICA_WIFI, INMUEBLE_CARACTERISTICA_CABLE,
+        INMUEBLE_CARACTERISTICA_CALEFACCION, INMUEBLE_CARACTERISTICA_GAS,
+        INMUEBLE_BARRIO, INMUEBLE_LOCALIDAD, INMUEBLE_PROVINCIA,
+        INMUEBLE_TIPO_INMUEBLE, PROPIETARIO_CODIGO, INMUEBLE_CANT_AMBIENTES,
+        INMUEBLE_ORIENTACION, INMUEBLE_DISPOSICION, INMUEBLE_ESTADO
+    )
+    SELECT
+        INMUEBLE_CODIGO, INMUEBLE_NOMBRE, INMUEBLE_DESCRIPCION, INMUEBLE_DIRECCION,
+        INMUEBLE_SUPERFICIETOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPESAS,
+        INMUEBLE_CARACTERISTICA_WIFI, INMUEBLE_CARACTERISTICA_CABLE,
+        INMUEBLE_CARACTERISTICA_CALEFACCION, INMUEBLE_CARACTERISTICA_GAS,
+        INMUEBLE_BARRIO, INMUEBLE_LOCALIDAD, INMUEBLE_PROVINCIA,
+        INMUEBLE_TIPO_INMUEBLE, PROPIETARIO_CODIGO, INMUEBLE_CANT_AMBIENTES,
+        INMUEBLE_ORIENTACION, INMUEBLE_DISPOSICION, INMUEBLE_ESTADO
+    FROM TablaMaestra_Inmueble;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Propietario
+CREATE PROCEDURE RADIUM.MigrarDatosPropietario AS
+BEGIN
+    INSERT INTO RADIUM.Propietario (
+        PROPIETARIO_CODIGO, PROPIETARIO_NOMBRE, PROPIETARIO_APELLIDO,
+        PROPIETARIO_DNI, PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
+        PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
+    )
+    SELECT
+        PROPIETARIO_CODIGO, PROPIETARIO_NOMBRE, PROPIETARIO_APELLIDO,
+        PROPIETARIO_DNI, PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
+        PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
+    FROM TablaMaestra_Propietario;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Alquiler
+CREATE PROCEDURE RADIUM.MigrarDatosAlquiler AS
+BEGIN
+    INSERT INTO RADIUM.Alquiler (
+        ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
+        ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
+        ALQUILER_GASTOS_AVERIGUA, INQUILINO_CODIGO, ALQUILER_ESTADO
+    )
+    SELECT
+        ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
+        ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
+        ALQUILER_GASTOS_AVERIGUA, INQUILINO_CODIGO, ALQUILER_ESTADO
+    FROM TablaMaestra_Alquiler;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Venta
+CREATE PROCEDURE RADIUM.MigrarDatosVenta AS
+BEGIN
+    INSERT INTO RADIUM.Venta (
+        VENTA_CODIGO, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
+        COMPRADOR_CODIGO, VENTA_MONEDA
+    )
+    SELECT
+        VENTA_CODIGO, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
+        COMPRADOR_CODIGO, VENTA_MONEDA
+    FROM TablaMaestra_Venta;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Pago_Alquiler
+CREATE PROCEDURE RADIUM.MigrarDatosPagoAlquiler AS
+BEGIN
+    INSERT INTO RADIUM.Pago_Alquiler (
+        PAGO_ALQUILER_CODIGO, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
+        PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
+        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO
+    )
+    SELECT
+        PAGO_ALQUILER_CODIGO, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
+        PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
+        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO
+    FROM TablaMaestra_PagoAlquiler;
+END;
+GO
+
+-- Stored Procedure para migrar datos de la tabla Pago_Venta
+CREATE PROCEDURE RADIUM.MigrarDatosPagoVenta AS
+BEGIN
+    INSERT INTO RADIUM.Pago_Venta (
+        PAGO_VENTA_CODIGO, PAGO_VENTA_IMPORTE, PAGO_VENTA_MONEDA,
+        PAGO_VENTA_COTIZACION, PAGO_VENTA_MEDIO_PAGO
+    )
+    SELECT
+        PAGO_VENTA_CODIGO, PAGO_VENTA_IMPORTE, PAGO_VENTA_MONEDA,
+        PAGO_VENTA_COTIZACION, PAGO_VENTA_MEDIO_PAGO
+    FROM TablaMaestra_PagoVenta;
+END;
+GO
+
+-- Repite el proceso para otras tablas que necesitas migrar
+
+-- Stored Procedure para migrar datos de la tabla Comprador
+CREATE PROCEDURE RADIUM.MigrarDatosComprador AS
+BEGIN
+    INSERT INTO RADIUM.Comprador (
+        COMPRADOR_CODIGO, COMPRADOR_NOMBRE, COMPRADOR_APELLIDO,
+        COMPRADOR_DNI, COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
+        COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
+    )
+    SELECT
+        COMPRADOR_CODIGO, COMPRADOR_NOMBRE, COMPRADOR_APELLIDO,
+        COMPRADOR_DNI, COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
+        COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
+    FROM TablaMaestra_Comprador;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Inquilino
+CREATE PROCEDURE RADIUM.MigrarDatosInquilino AS
+BEGIN
+    INSERT INTO RADIUM.Inquilino (
+        INQUILINO_CODIGO, INQUILINO_NOMBRE, INQUILINO_APELLIDO,
+        INQUILINO_DNI, INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
+        INQUILINO_MAIL, INQUILINO_FECHA_NAC
+    )
+    SELECT
+        INQUILINO_CODIGO, INQUILINO_NOMBRE, INQUILINO_APELLIDO,
+        INQUILINO_DNI, INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
+        INQUILINO_MAIL, INQUILINO_FECHA_NAC
+    FROM TablaMaestra_Inquilino;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Tipo_Operacion
+CREATE PROCEDURE RADIUM.MigrarDatosTipoOperacion AS
+BEGIN
+    INSERT INTO RADIUM.Tipo_Operacion (
+        TIPO_OPERACION_CODIGO, TIPO_OPERACION_NOMBRE
+    )
+    SELECT
+        TIPO_OPERACION_CODIGO, TIPO_OPERACION_NOMBRE
+    FROM TablaMaestra_TipoOperacion;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Moneda
+CREATE PROCEDURE RADIUM.MigrarDatosMoneda AS
+BEGIN
+    INSERT INTO RADIUM.Moneda (
+        MONEDA_CODIGO, MONEDA_NOMBRE
+    )
+    SELECT
+        MONEDA_CODIGO, MONEDA_NOMBRE
+    FROM TablaMaestra_Moneda;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Estado_Inmueble
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoInmueble AS
+BEGIN
+    INSERT INTO RADIUM.Estado_Inmueble (
+        ESTADO_CODIGO, ESTADO_TIPO
+    )
+    SELECT
+        ESTADO_CODIGO, ESTADO_TIPO
+    FROM TablaMaestra_EstadoInmueble;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Estado_Anuncio
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoAnuncio AS
+BEGIN
+    INSERT INTO RADIUM.Estado_Anuncio (
+        ESTADO_CODIGO, ESTADO_TIPO
+    )
+    SELECT
+        ESTADO_CODIGO, ESTADO_TIPO
+    FROM TablaMaestra_EstadoAnuncio;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Tipo_Periodo
+CREATE PROCEDURE RADIUM.MigrarDatosTipoPeriodo AS
+BEGIN
+    INSERT INTO RADIUM.Tipo_Periodo (
+        TIPO_PERIODO_CODIGO, TIPO_PERIODO_TIPO
+    )
+    SELECT
+        TIPO_PERIODO_CODIGO, TIPO_PERIODO_TIPO
+    FROM TablaMaestra_TipoPeriodo;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Stored Procedure para migrar datos de la tabla Estado_Alquiler
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoAlquiler AS
+BEGIN
+    INSERT INTO RADIUM.Estado_Alquiler (
+        ESTADO_CODIGO, ESTADO_TIPO
+    )
+    SELECT
+        ESTADO_CODIGO, ESTADO_TIPO
+    FROM TablaMaestra_EstadoAlquiler;
+END;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Ejecución de Stored Procedures para migrar datos
+
+-- Ejecutar el Stored Procedure para la tabla Sucursal
+EXEC RADIUM.MigrarDatosSucursal;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Inmueble
+EXEC RADIUM.MigrarDatosInmueble;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Propietario
+EXEC RADIUM.MigrarDatosPropietario;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Alquiler
+EXEC RADIUM.MigrarDatosAlquiler;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Venta
+EXEC RADIUM.MigrarDatosVenta;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Pago_Alquiler
+EXEC RADIUM.MigrarDatosPagoAlquiler;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Pago_Venta
+EXEC RADIUM.MigrarDatosPagoVenta;
+GO
+
+-- Repite el proceso para otras tablas
+
+-- Ejecutar el Stored Procedure para la tabla Comprador
+EXEC RADIUM.MigrarDatosComprador;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Inquilino
+EXEC RADIUM.MigrarDatosInquilino;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Tipo_Operacion
+EXEC RADIUM.MigrarDatosTipoOperacion;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Moneda
+EXEC RADIUM.MigrarDatosMoneda;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Estado_Inmueble
+EXEC RADIUM.MigrarDatosEstadoInmueble;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Estado_Anuncio
+EXEC RADIUM.MigrarDatosEstadoAnuncio;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Tipo_Periodo
+EXEC RADIUM.MigrarDatosTipoPeriodo;
+GO
+
+-- Ejecutar el Stored Procedure para la tabla Estado_Alquiler
+EXEC RADIUM.MigrarDatosEstadoAlquiler;
+GO
+
+-- Fin del script
