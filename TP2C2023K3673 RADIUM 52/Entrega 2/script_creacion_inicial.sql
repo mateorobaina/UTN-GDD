@@ -268,12 +268,12 @@ GO
 
 -- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (TIPO_INMUEBLE_CODIGO) REFERENCES gd_esquema.Tipo_Inmueble(TIPO_INMUEBLE_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_TIPO_INMUEBLE) REFERENCES gd_esquema.Tipo_Inmueble(TIPO_INMUEBLE_CODIGO);
 GO
 
 -- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (LOCALIDAD_CODIGO) REFERENCES gd_esquema.Localidad(LOCALIDAD_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_LOCALIDAD) REFERENCES gd_esquema.Localidad(LOCALIDAD_CODIGO);
 GO
 
 -- Definición de claves foráneas para relaciones
@@ -293,12 +293,7 @@ GO
 
 -- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (ESTADO_ANUNCIO_CODIGO) REFERENCES gd_esquema.Estado_Anuncio(ESTADO_CODIGO);
-GO
-
--- Definición de claves foráneas para relaciones
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (ORIENTACION_CODIGO) REFERENCES gd_esquema.Orientacion(ORIENTACION_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_ORIENTACION) REFERENCES gd_esquema.Orientacion(ORIENTACION_CODIGO);
 GO
 
 -- Definición de claves foráneas para relaciones
@@ -312,18 +307,8 @@ ADD FOREIGN KEY (COMPRADOR_CODIGO) REFERENCES gd_esquema.Comprador(COMPRADOR_COD
 GO
 
 -- Definición de claves foráneas para relaciones
-ALTER TABLE gd_esquema.Alquiler
-ADD FOREIGN KEY (ALQUILER_MONEDA_CODIGO) REFERENCES gd_esquema.Moneda(MONEDA_CODIGO);
-GO
-
--- Definición de claves foráneas para relaciones
-ALTER TABLE gd_esquema.Pago_Alquiler
-ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO_CODIGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_CODIGO);
-GO
-
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Pago_Venta
-ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO_CODIGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_CODIGO);
+ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_CODIGO);
 GO
 
 -- Define las claves foráneas para las demás relaciones entre tablas
