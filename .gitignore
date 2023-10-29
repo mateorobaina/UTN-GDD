@@ -1,0 +1,4 @@
+# SQLServer Docker mounted folders
+data/
+log/
+secrets/
