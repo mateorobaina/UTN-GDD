@@ -2,7 +2,10 @@ USE master;
 
 BEGIN TRANSACTION;
 
-CREATE TABLE gd_esquema.Sucursal (
+CREATE SCHEMA RADIUM;
+GO
+
+CREATE TABLE RADIUM.Sucursal (
     SUCURSAL_ID INT IDENTITY(1,1) PRIMARY KEY,
     SUCURSAL_CODIGO INT,
     SUCURSAL_NOMBRE NVARCHAR(255),
@@ -13,7 +16,7 @@ CREATE TABLE gd_esquema.Sucursal (
 );
 GO
 
-CREATE TABLE gd_esquema.Inmueble (
+CREATE TABLE RADIUM.Inmueble (
     INMUEBLE_ID INT IDENTITY(1,1) PRIMARY KEY,
     INMUEBLE_CODIGO INT,
     INMUEBLE_NOMBRE NVARCHAR(255),
@@ -38,7 +41,7 @@ CREATE TABLE gd_esquema.Inmueble (
 );
 GO
 
-CREATE TABLE gd_esquema.Propietario (
+CREATE TABLE RADIUM.Propietario (
     PROPIETARIO_ID INT IDENTITY(1,1) PRIMARY KEY,
     PROPIETARIO_DNI NVARCHAR(20),
     PROPIETARIO_NOMBRE NVARCHAR(255),
@@ -50,7 +53,7 @@ CREATE TABLE gd_esquema.Propietario (
 );
 GO
 
-CREATE TABLE gd_esquema.Agente (
+CREATE TABLE RADIUM.Agente (
     AGENTE_ID INT IDENTITY(1,1) PRIMARY KEY,
     AGENTE_DNI NVARCHAR(20),
     AGENTE_NOMBRE NVARCHAR(255),
@@ -62,19 +65,19 @@ CREATE TABLE gd_esquema.Agente (
 );
 GO
 
-CREATE TABLE gd_esquema.Tipo_Operacion (
+CREATE TABLE RADIUM.Tipo_Operacion (
     TIPO_OPERACION_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_OPERACION_NOMBRE NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Moneda (
+CREATE TABLE RADIUM.Moneda (
     MONEDA_ID INT IDENTITY(1,1) PRIMARY KEY,
     MONEDA_NOMBRE NVARCHAR(255)
     CONSTRAINT UQ_MONEDA_NOMBRE UNIQUE(MONEDA_NOMBRE)
 );
 
-CREATE TABLE gd_esquema.Alquiler (
+CREATE TABLE RADIUM.Alquiler (
     ALQUILER_ID INT IDENTITY(1,1) PRIMARY KEY,
     ALQUILER_CODIGO INT,
     ALQUILER_FECHA_INICIO DATETIME,
@@ -89,7 +92,7 @@ CREATE TABLE gd_esquema.Alquiler (
 );
 GO
 
-CREATE TABLE gd_esquema.Venta (
+CREATE TABLE RADIUM.Venta (
     VENTA_ID INT PRIMARY KEY,
     VENTA_FECHA DATETIME,
     VENTA_PRECIO_VENTA DECIMAL(10, 2),
@@ -99,12 +102,12 @@ CREATE TABLE gd_esquema.Venta (
 );
 GO
 
-CREATE TABLE gd_esquema.Medio_Pago (
+CREATE TABLE RADIUM.Medio_Pago (
     MEDIO_PAGO_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_MEDIO_PAGO NVARCHAR(30)
 )
 
-CREATE TABLE gd_esquema.Pago_Alquiler (
+CREATE TABLE RADIUM.Pago_Alquiler (
     PAGO_ALQUILER_ID INT PRIMARY KEY,
     PAGO_ALQUILER_FECHA DATETIME,
     PAGO_ALQUILER_FECHA_VENCIMIENTO DATETIME,
@@ -117,7 +120,7 @@ CREATE TABLE gd_esquema.Pago_Alquiler (
 );
 GO
 
-CREATE TABLE gd_esquema.Pago_Venta (
+CREATE TABLE RADIUM.Pago_Venta (
     PAGO_VENTA_ID INT IDENTITY(1,1) PRIMARY KEY,
     PAGO_VENTA_IMPORTE DECIMAL(10, 2),
     PAGO_VENTA_MONEDA INT,
@@ -126,7 +129,7 @@ CREATE TABLE gd_esquema.Pago_Venta (
 );
 GO
 
-CREATE TABLE gd_esquema.Detalle_Importe (
+CREATE TABLE RADIUM.Detalle_Importe (
     DETALLE_IMPORTE_ID INT IDENTITY(1,1) PRIMARY KEY,
     DETALLE_IMPORTE_PERIODO_INI DATETIME,
     DETALLE_IMPORTE_PERIODO_FIN DATETIME,
@@ -134,7 +137,7 @@ CREATE TABLE gd_esquema.Detalle_Importe (
 );
 GO
 
-CREATE TABLE gd_esquema.Comprador (
+CREATE TABLE RADIUM.Comprador (
     COMPRADOR_ID INT IDENTITY(1,1) PRIMARY KEY,
     COMPRADOR_DNI NVARCHAR(20),
     COMPRADOR_NOMBRE NVARCHAR(255),
@@ -146,7 +149,7 @@ CREATE TABLE gd_esquema.Comprador (
 );
 GO
 
-CREATE TABLE gd_esquema.Inquilino (
+CREATE TABLE RADIUM.Inquilino (
     INQUILINO_ID INT IDENTITY(1,1) PRIMARY KEY,
     INQUILINO_DNI NVARCHAR(20),
     INQUILINO_NOMBRE NVARCHAR(255),
@@ -158,135 +161,135 @@ CREATE TABLE gd_esquema.Inquilino (
 );
 GO
 
-CREATE TABLE gd_esquema.Tipo_Inmueble (
+CREATE TABLE RADIUM.Tipo_Inmueble (
     TIPO_INMUEBLE_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_INMUEBLE_TIPO NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Provincia (
+CREATE TABLE RADIUM.Provincia (
     PROVINCIA_ID INT IDENTITY(1,1) PRIMARY KEY,
     PROVINCIA_NOMBRE NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Localidad (
+CREATE TABLE RADIUM.Localidad (
     LOCALIDAD_ID INT IDENTITY(1,1) PRIMARY KEY,
     LOCALIDAD_NOMBRE NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Barrio (
+CREATE TABLE RADIUM.Barrio (
     BARRIO_ID INT IDENTITY(1,1) PRIMARY KEY,
     BARRIO_NOMBRE NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Ambientes (
+CREATE TABLE RADIUM.Ambientes (
     AMBIENTES_ID INT IDENTITY(1,1) PRIMARY KEY,
     AMBIENTES_CANTIDAD NVARCHAR(40)
 );
 GO
 
-CREATE TABLE gd_esquema.Disposicion (
+CREATE TABLE RADIUM.Disposicion (
     DISPOSICION_ID INT IDENTITY(1,1) PRIMARY KEY,
     DISPOSICION_UBICACION NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Orientacion (
+CREATE TABLE RADIUM.Orientacion (
     ORIENTACION_ID INT IDENTITY(1,1) PRIMARY KEY,
     ORIENTACION_CARDINAL NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Estado_Inmueble (
+CREATE TABLE RADIUM.Estado_Inmueble (
     ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Estado_Anuncio (
+CREATE TABLE RADIUM.Estado_Anuncio (
     ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Tipo_Periodo (
+CREATE TABLE RADIUM.Tipo_Periodo (
     TIPO_PERIODO_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_PERIODO_TIPO NVARCHAR(255)
 );
 GO
 
-CREATE TABLE gd_esquema.Estado_Alquiler (
+CREATE TABLE RADIUM.Estado_Alquiler (
     ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_PROPIETARIO_ID) REFERENCES gd_esquema.Propietario(PROPIETARIO_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_PROPIETARIO_ID) REFERENCES RADIUM.Propietario(PROPIETARIO_ID);
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_TIPO_INMUEBLE_ID) REFERENCES gd_esquema.Tipo_Inmueble(TIPO_INMUEBLE_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_TIPO_INMUEBLE_ID) REFERENCES RADIUM.Tipo_Inmueble(TIPO_INMUEBLE_ID);
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_LOCALIDAD_ID) REFERENCES gd_esquema.Localidad(LOCALIDAD_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_LOCALIDAD_ID) REFERENCES RADIUM.Localidad(LOCALIDAD_ID);
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_DISPOSICION_ID) REFERENCES gd_esquema.Disposicion(DISPOSICION_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_DISPOSICION_ID) REFERENCES RADIUM.Disposicion(DISPOSICION_ID);
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_ORIENTACION_ID) REFERENCES gd_esquema.Orientacion(ORIENTACION_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_ORIENTACION_ID) REFERENCES RADIUM.Orientacion(ORIENTACION_ID);
 GO
 
-ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_ESTADO_ID) REFERENCES gd_esquema.Estado_Inmueble(ESTADO_ID);
+ALTER TABLE RADIUM.Inmueble
+ADD FOREIGN KEY (INMUEBLE_ESTADO_ID) REFERENCES RADIUM.Estado_Inmueble(ESTADO_ID);
 GO
 
-ALTER TABLE gd_esquema.Alquiler
-ADD FOREIGN KEY (INQUILINO_ID) REFERENCES gd_esquema.Inquilino(INQUILINO_ID);
+ALTER TABLE RADIUM.Alquiler
+ADD FOREIGN KEY (INQUILINO_ID) REFERENCES RADIUM.Inquilino(INQUILINO_ID);
 GO
 
-ALTER TABLE gd_esquema.Alquiler
-ADD FOREIGN KEY (ALQUILER_DETALLE_IMPORTE_ID) REFERENCES gd_esquema.Detalle_Importe(DETALLE_IMPORTE_ID);
+ALTER TABLE RADIUM.Alquiler
+ADD FOREIGN KEY (ALQUILER_DETALLE_IMPORTE_ID) REFERENCES RADIUM.Detalle_Importe(DETALLE_IMPORTE_ID);
 GO
 
-ALTER TABLE gd_esquema.Venta
-ADD FOREIGN KEY (COMPRADOR_ID) REFERENCES gd_esquema.Comprador(COMPRADOR_ID);
+ALTER TABLE RADIUM.Venta
+ADD FOREIGN KEY (COMPRADOR_ID) REFERENCES RADIUM.Comprador(COMPRADOR_ID);
 GO
 
-ALTER TABLE gd_esquema.Pago_Alquiler
-ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO_ID) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_ID);
+ALTER TABLE RADIUM.Pago_Alquiler
+ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO_ID) REFERENCES RADIUM.Medio_Pago(MEDIO_PAGO_ID);
 
-ALTER TABLE gd_esquema.Pago_Venta
-ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_ID);
+ALTER TABLE RADIUM.Pago_Venta
+ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO) REFERENCES RADIUM.Medio_Pago(MEDIO_PAGO_ID);
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosSucursal AS
+CREATE PROCEDURE RADIUM.MigrarDatosSucursal AS
 BEGIN
-    INSERT INTO gd_esquema.Sucursal (
+    INSERT INTO RADIUM.Sucursal (
         SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
         SUCURSAL_LOCALIDAD_ID, SUCURSAL_PROVINCIA_ID
     )
      SELECT DISTINCT
         SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
         LOCALIDAD_ID, PROVINCIA_ID
-    FROM Maestra m
-        JOIN gd_esquema.Localidad l
+    FROM gd_esquema.Maestra m
+        JOIN RADIUM.Localidad l
             on l.LOCALIDAD_NOMBRE = m.SUCURSAL_LOCALIDAD
-        JOIN gd_esquema.Provincia p
+        JOIN RADIUM.Provincia p
             on p.PROVINCIA_NOMBRE = m.SUCURSAL_PROVINCIA
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosInmueble AS
+CREATE PROCEDURE RADIUM.MigrarDatosInmueble AS
 BEGIN
-    INSERT INTO gd_esquema.Inmueble (
+    INSERT INTO RADIUM.Inmueble (
         INMUEBLE_CODIGO, INMUEBLE_NOMBRE, INMUEBLE_DESCRIPCION, INMUEBLE_DIRECCION,
         INMUEBLE_SUPERFICIE_TOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPENSAS,
         INMUEBLE_CARACTERISTICA_WIFI, INMUEBLE_CARACTERISTICA_CABLE,
@@ -303,31 +306,31 @@ BEGIN
         BARRIO_ID, LOCALIDAD_ID, PROVINCIA_ID,
         TIPO_INMUEBLE_ID, PROPIETARIO_ID, AMBIENTES_ID,
         ORIENTACION_ID, DISPOSICION_ID, ESTADO_ID
-    FROM Maestra m
-        JOIN gd_esquema.Propietario p
+    FROM gd_esquema.Maestra m
+        JOIN RADIUM.Propietario p
             ON p.PROPIETARIO_DNI = m.PROPIETARIO_DNI AND p.PROPIETARIO_FECHA_NAC = m.PROPIETARIO_FECHA_NAC
-        JOIN gd_esquema.Tipo_Inmueble t
+        JOIN RADIUM.Tipo_Inmueble t
             ON t.TIPO_INMUEBLE_TIPO = m.INMUEBLE_TIPO_INMUEBLE
-        JOIN gd_esquema.Ambientes amb
+        JOIN RADIUM.Ambientes amb
             ON amb.AMBIENTES_CANTIDAD = m.INMUEBLE_CANT_AMBIENTES
-        JOIN gd_esquema.Estado_Inmueble est
+        JOIN RADIUM.Estado_Inmueble est
             ON est.ESTADO_TIPO = m.INMUEBLE_ESTADO
-        JOIN gd_esquema.Orientacion o
+        JOIN RADIUM.Orientacion o
             ON o.ORIENTACION_CARDINAL = m.INMUEBLE_ORIENTACION
-        JOIN gd_esquema.Disposicion d
+        JOIN RADIUM.Disposicion d
             ON d.DISPOSICION_UBICACION = m.INMUEBLE_DISPOSICION
-        JOIN gd_esquema.Provincia prov
+        JOIN RADIUM.Provincia prov
             ON prov.PROVINCIA_NOMBRE = m.INMUEBLE_PROVINCIA
-        JOIN gd_esquema.Localidad l
+        JOIN RADIUM.Localidad l
             ON l.LOCALIDAD_NOMBRE = m.INMUEBLE_LOCALIDAD
-        JOIN gd_esquema.Barrio b
+        JOIN RADIUM.Barrio b
             ON b.BARRIO_NOMBRE = m.INMUEBLE_BARRIO
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosPropietario AS
+CREATE PROCEDURE RADIUM.MigrarDatosPropietario AS
 BEGIN
-    INSERT INTO gd_esquema.Propietario (
+    INSERT INTO RADIUM.Propietario (
         PROPIETARIO_DNI, PROPIETARIO_NOMBRE, PROPIETARIO_APELLIDO,
         PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
         PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
@@ -336,13 +339,13 @@ BEGIN
         PROPIETARIO_DNI, PROPIETARIO_NOMBRE, PROPIETARIO_APELLIDO,
         PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
         PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosAlquiler AS
+CREATE PROCEDURE RADIUM.MigrarDatosAlquiler AS
 BEGIN
-    INSERT INTO gd_esquema.Alquiler (
+    INSERT INTO RADIUM.Alquiler (
         ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
         ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
         ALQUILER_GASTOS_AVERIGUA, INQUILINO_ID, ALQUILER_ESTADO
@@ -351,19 +354,19 @@ BEGIN
         ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
         ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
         ALQUILER_GASTOS_AVERIGUA, INQUILINO_ID, ALQUILER_ESTADO
-    FROM Maestra m
-        JOIN gd_esquema.Inquilino i
+    FROM gd_esquema.Maestra m
+        JOIN RADIUM.Inquilino i
             ON i.INQUILINO_DNI = m.INQUILINO_DNI AND i.INQUILINO_FECHA_NAC = m.INQUILINO_FECHA_NAC
-        JOIN gd_esquema.Detalle_Importe d
+        JOIN RADIUM.Detalle_Importe d
             ON d.DETALLE_IMPORTE_PERIODO_INI = m.DETALLE_ALQ_NRO_PERIODO_INI
                 AND d.DETALLE_IMPORTE_PERIODO_FIN = m.DETALLE_ALQ_NRO_PERIODO_FIN
                 AND d.DETALLE_IMPORTE_PRECIO = m.PAGO_ALQUILER_IMPORTE
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosVenta AS
+CREATE PROCEDURE RADIUM.MigrarDatosVenta AS
 BEGIN
-    INSERT INTO gd_esquema.Venta (
+    INSERT INTO RADIUM.Venta (
         VENTA_ID, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
         COMPRADOR_ID, VENTA_MONEDA_ID
     )
@@ -371,16 +374,16 @@ BEGIN
         VENTA_CODIGO, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
         COMPRADOR_ID, MONEDA_ID
     FROM gd_esquema.Maestra m
-        JOIN gd_esquema.Moneda mon
+        JOIN RADIUM.Moneda mon
             ON mon.MONEDA_NOMBRE = m.VENTA_MONEDA
-        JOIN gd_esquema.Comprador com
+        JOIN RADIUM.Comprador com
             ON com.COMPRADOR_DNI = m.COMPRADOR_DNI AND com.COMPRADOR_FECHA_NAC = m.COMPRADOR_FECHA_NAC
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosPagoAlquiler AS
+CREATE PROCEDURE RADIUM.MigrarDatosPagoAlquiler AS
 BEGIN
-    INSERT INTO gd_esquema.Pago_Alquiler (
+    INSERT INTO RADIUM.Pago_Alquiler (
         PAGO_ALQUILER_ID, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
         PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
         PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO_ID
@@ -390,14 +393,14 @@ BEGIN
         PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
         PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, MEDIO_PAGO_ID
     FROM gd_esquema.Maestra m
-        JOIN gd_esquema.Medio_Pago med
+        JOIN RADIUM.Medio_Pago med
             ON med.TIPO_MEDIO_PAGO = m.PAGO_ALQUILER_MEDIO_PAGO
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosPagoVenta AS
+CREATE PROCEDURE RADIUM.MigrarDatosPagoVenta AS
 BEGIN
-    INSERT INTO gd_esquema.Pago_Venta (
+    INSERT INTO RADIUM.Pago_Venta (
         PAGO_VENTA_IMPORTE, PAGO_VENTA_MONEDA,
         PAGO_VENTA_COTIZACION, PAGO_VENTA_MEDIO_PAGO
     )
@@ -405,16 +408,16 @@ BEGIN
         PAGO_VENTA_IMPORTE, MONEDA_ID,
         PAGO_VENTA_COTIZACION, MEDIO_PAGO_ID
     FROM gd_esquema.Maestra m
-        JOIN gd_esquema.Moneda mon
+        JOIN RADIUM.Moneda mon
             ON mon.MONEDA_NOMBRE = m.VENTA_MONEDA
-        JOIN gd_esquema.Medio_Pago med
+        JOIN RADIUM.Medio_Pago med
             ON med.TIPO_MEDIO_PAGO = m.PAGO_VENTA_MEDIO_PAGO
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosComprador AS
+CREATE PROCEDURE RADIUM.MigrarDatosComprador AS
 BEGIN
-    INSERT INTO gd_esquema.Comprador (
+    INSERT INTO RADIUM.Comprador (
         COMPRADOR_DNI, COMPRADOR_NOMBRE, COMPRADOR_APELLIDO,
         COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
         COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
@@ -423,13 +426,13 @@ BEGIN
         COMPRADOR_DNI, COMPRADOR_NOMBRE, COMPRADOR_APELLIDO,
         COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
         COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
-    FROM Maestra WHERE COMPRADOR_DNI is not null;
+    FROM gd_esquema.Maestra WHERE COMPRADOR_DNI is not null;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosInquilino AS
+CREATE PROCEDURE RADIUM.MigrarDatosInquilino AS
 BEGIN
-    INSERT INTO gd_esquema.Inquilino (
+    INSERT INTO RADIUM.Inquilino (
         INQUILINO_DNI, INQUILINO_NOMBRE, INQUILINO_APELLIDO,
         INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
         INQUILINO_MAIL, INQUILINO_FECHA_NAC
@@ -438,24 +441,24 @@ BEGIN
         INQUILINO_DNI, INQUILINO_NOMBRE, INQUILINO_APELLIDO,
         INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
         INQUILINO_MAIL, INQUILINO_FECHA_NAC
-    FROM Maestra WHERE INQUILINO_DNI is not null;
+    FROM gd_esquema.Maestra WHERE INQUILINO_DNI is not null;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosTipoOperacion AS
+CREATE PROCEDURE RADIUM.MigrarDatosTipoOperacion AS
 BEGIN
-    INSERT INTO gd_esquema.Tipo_Operacion (
+    INSERT INTO RADIUM.Tipo_Operacion (
         TIPO_OPERACION_NOMBRE
     )
     SELECT
         DISTINCT ANUNCIO_TIPO_OPERACION
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosMoneda AS
+CREATE PROCEDURE RADIUM.MigrarDatosMoneda AS
 BEGIN
-    INSERT INTO gd_esquema.Moneda (
+    INSERT INTO RADIUM.Moneda (
         MONEDA_NOMBRE
     )
     SELECT DISTINCT MONEDA FROM (
@@ -468,30 +471,30 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosEstadoInmueble AS
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoInmueble AS
 BEGIN
-    INSERT INTO gd_esquema.Estado_Inmueble (
+    INSERT INTO RADIUM.Estado_Inmueble (
         ESTADO_TIPO
     )
     SELECT DISTINCT
         INMUEBLE_ESTADO
-    FROM Maestra
+    FROM gd_esquema.Maestra
         WHERE INMUEBLE_ESTADO is not null;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosEstadoAnuncio AS
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoAnuncio AS
 BEGIN
-    INSERT INTO gd_esquema.Estado_Anuncio (
+    INSERT INTO RADIUM.Estado_Anuncio (
         ESTADO_TIPO
     )
     SELECT DISTINCT ANUNCIO_ESTADO FROM gd_esquema.Maestra WHERE ANUNCIO_ESTADO is not null;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosTipoPeriodo AS
+CREATE PROCEDURE RADIUM.MigrarDatosTipoPeriodo AS
 BEGIN
-    INSERT INTO gd_esquema.Tipo_Periodo (
+    INSERT INTO RADIUM.Tipo_Periodo (
         TIPO_PERIODO_TIPO
     )
     SELECT DISTINCT
@@ -500,31 +503,31 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosEstadoAlquiler AS
+CREATE PROCEDURE RADIUM.MigrarDatosEstadoAlquiler AS
 BEGIN
-    INSERT INTO gd_esquema.Estado_Alquiler (
+    INSERT INTO RADIUM.Estado_Alquiler (
         ESTADO_TIPO
     )
     SELECT DISTINCT
         ALQUILER_ESTADO
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosDisposicion AS
+CREATE PROCEDURE RADIUM.MigrarDatosDisposicion AS
 BEGIN
-    INSERT INTO gd_esquema.Disposicion (
+    INSERT INTO RADIUM.Disposicion (
         DISPOSICION_UBICACION
     )
     SELECT DISTINCT
         INMUEBLE_DISPOSICION
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosAgente AS
+CREATE PROCEDURE RADIUM.MigrarDatosAgente AS
 BEGIN
-    INSERT INTO gd_esquema.Agente (
+    INSERT INTO RADIUM.Agente (
         AGENTE_DNI,
         AGENTE_NOMBRE,
         AGENTE_APELLIDO ,
@@ -541,24 +544,24 @@ BEGIN
         AGENTE_TELEFONO,
         AGENTE_MAIL,
         AGENTE_FECHA_NAC
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosAmbientes AS
+CREATE PROCEDURE RADIUM.MigrarDatosAmbientes AS
 BEGIN
-    INSERT INTO gd_esquema.Ambientes (
+    INSERT INTO RADIUM.Ambientes (
         AMBIENTES_CANTIDAD
     )
     SELECT DISTINCT
         INMUEBLE_CANT_AMBIENTES
-    FROM Maestra;
+    FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosProvincia AS
+CREATE PROCEDURE RADIUM.MigrarDatosProvincia AS
 BEGIN
-    INSERT INTO gd_esquema.Provincia (
+    INSERT INTO RADIUM.Provincia (
         PROVINCIA_NOMBRE
     )
     SELECT DISTINCT PROVINCIA FROM
@@ -569,9 +572,9 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosLocalidad AS
+CREATE PROCEDURE RADIUM.MigrarDatosLocalidad AS
 BEGIN
-    INSERT INTO gd_esquema.Localidad (
+    INSERT INTO RADIUM.Localidad (
         LOCALIDAD_NOMBRE
     )
     SELECT DISTINCT LOCALIDAD FROM
@@ -582,9 +585,9 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDatosBarrio AS
+CREATE PROCEDURE RADIUM.MigrarDatosBarrio AS
 BEGIN
-    INSERT INTO gd_esquema.Barrio (
+    INSERT INTO RADIUM.Barrio (
         BARRIO_NOMBRE
     )
     SELECT DISTINCT
@@ -593,9 +596,9 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarRelacionLocalidadProvincia AS
+CREATE PROCEDURE RADIUM.MigrarRelacionLocalidadProvincia AS
 BEGIN
-    INSERT INTO gd_esquema.Barrio (
+    INSERT INTO RADIUM.Barrio (
         BARRIO_NOMBRE
     )
     SELECT DISTINCT
@@ -604,9 +607,9 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarDetalleImporteAlquiler AS
+CREATE PROCEDURE RADIUM.MigrarDetalleImporteAlquiler AS
 BEGIN
-    INSERT INTO gd_esquema.Detalle_Importe (
+    INSERT INTO RADIUM.Detalle_Importe (
         DETALLE_IMPORTE_PERIODO_INI,
         DETALLE_IMPORTE_PERIODO_FIN,
         DETALLE_IMPORTE_PRECIO
@@ -619,9 +622,9 @@ FROM gd_esquema.Maestra m
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarMediosPago AS
+CREATE PROCEDURE RADIUM.MigrarMediosPago AS
 BEGIN
-    INSERT INTO gd_esquema.Medio_Pago (
+    INSERT INTO RADIUM.Medio_Pago (
         TIPO_MEDIO_PAGO
     )
     SELECT DISTINCT MEDIO_PAGO FROM
@@ -632,97 +635,97 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarOrientacion AS
+CREATE PROCEDURE RADIUM.MigrarOrientacion AS
 BEGIN
-    INSERT INTO gd_esquema.Orientacion (
+    INSERT INTO RADIUM.Orientacion (
         ORIENTACION_CARDINAL
     )
-    SELECT DISTINCT INMUEBLE_ORIENTACION FROM Maestra;
+    SELECT DISTINCT INMUEBLE_ORIENTACION FROM gd_esquema.Maestra;
 END;
 GO
 
-CREATE PROCEDURE gd_esquema.MigrarTipoInmueble AS
+CREATE PROCEDURE RADIUM.MigrarTipoInmueble AS
 BEGIN
-    INSERT INTO gd_esquema.Tipo_Inmueble (
+    INSERT INTO RADIUM.Tipo_Inmueble (
         TIPO_INMUEBLE_TIPO
     )
-    SELECT DISTINCT INMUEBLE_TIPO_INMUEBLE FROM Maestra;
+    SELECT DISTINCT INMUEBLE_TIPO_INMUEBLE FROM gd_esquema.Maestra;
 END;
 GO
 
-EXEC gd_esquema.MigrarDetalleImporteAlquiler;
+EXEC RADIUM.MigrarDetalleImporteAlquiler;
 GO
 
-EXEC gd_esquema.MigrarTipoInmueble;
+EXEC RADIUM.MigrarTipoInmueble;
 GO
 
-EXEC gd_esquema.MigrarOrientacion;
+EXEC RADIUM.MigrarOrientacion;
 GO
 
-EXEC gd_esquema.MigrarMediosPago;
+EXEC RADIUM.MigrarMediosPago;
 GO
 
-EXEC gd_esquema.MigrarDatosProvincia;
+EXEC RADIUM.MigrarDatosProvincia;
 GO
 
-EXEC gd_esquema.MigrarDatosLocalidad;
+EXEC RADIUM.MigrarDatosLocalidad;
 GO
 
-EXEC gd_esquema.MigrarDatosBarrio;
+EXEC RADIUM.MigrarDatosBarrio;
 GO
 
-EXEC gd_esquema.MigrarDatosAmbientes;
+EXEC RADIUM.MigrarDatosAmbientes;
 GO
 
-EXEC gd_esquema.MigrarDatosDisposicion;
+EXEC RADIUM.MigrarDatosDisposicion;
 GO
 
-EXEC gd_esquema.MigrarDatosAgente;
+EXEC RADIUM.MigrarDatosAgente;
 GO
 
-EXEC gd_esquema.MigrarDatosMoneda;
+EXEC RADIUM.MigrarDatosMoneda;
 GO
 
-EXEC gd_esquema.MigrarDatosComprador;
+EXEC RADIUM.MigrarDatosComprador;
 GO
 
-EXEC gd_esquema.MigrarDatosInquilino;
+EXEC RADIUM.MigrarDatosInquilino;
 GO
 
-EXEC gd_esquema.MigrarDatosTipoOperacion;
+EXEC RADIUM.MigrarDatosTipoOperacion;
 GO
 
-EXEC gd_esquema.MigrarDatosEstadoInmueble;
+EXEC RADIUM.MigrarDatosEstadoInmueble;
 GO
 
-EXEC gd_esquema.MigrarDatosEstadoAnuncio;
+EXEC RADIUM.MigrarDatosEstadoAnuncio;
 GO
 
-EXEC gd_esquema.MigrarDatosTipoPeriodo;
+EXEC RADIUM.MigrarDatosTipoPeriodo;
 GO
 
-EXEC gd_esquema.MigrarDatosEstadoAlquiler;
+EXEC RADIUM.MigrarDatosEstadoAlquiler;
 GO
 
-EXEC gd_esquema.MigrarDatosSucursal;
+EXEC RADIUM.MigrarDatosSucursal;
 GO
 
-EXEC gd_esquema.MigrarDatosVenta;
+EXEC RADIUM.MigrarDatosVenta;
 GO
 
-EXEC gd_esquema.MigrarDatosPagoAlquiler;
+EXEC RADIUM.MigrarDatosPagoAlquiler;
 GO
 
-EXEC gd_esquema.MigrarDatosPagoVenta;
+EXEC RADIUM.MigrarDatosPagoVenta;
 GO
 
-EXEC gd_esquema.MigrarDatosPropietario;
+EXEC RADIUM.MigrarDatosPropietario;
 GO
 
-EXEC gd_esquema.MigrarDatosAlquiler;
+EXEC RADIUM.MigrarDatosAlquiler;
 GO
 
-EXEC gd_esquema.MigrarDatosInmueble;
+EXEC RADIUM.MigrarDatosInmueble;
 GO
 
 COMMIT;
