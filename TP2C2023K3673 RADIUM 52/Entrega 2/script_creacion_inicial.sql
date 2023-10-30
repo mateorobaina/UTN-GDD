@@ -1,47 +1,46 @@
 USE master;
 
-
 BEGIN TRANSACTION;
 
--- Creación de la tabla Sucursal
 CREATE TABLE gd_esquema.Sucursal (
-    SUCURSAL_CODIGO INT PRIMARY KEY,
+    SUCURSAL_ID INT IDENTITY(1,1) PRIMARY KEY,
+    SUCURSAL_CODIGO INT,
     SUCURSAL_NOMBRE NVARCHAR(255),
     SUCURSAL_DIRECCION NVARCHAR(255),
     SUCURSAL_TELEFONO NVARCHAR(20),
-    SUCURSAL_LOCALIDAD NVARCHAR(255),
-    SUCURSAL_PROVINCIA NVARCHAR(255)
+    SUCURSAL_LOCALIDAD_ID INT,
+    SUCURSAL_PROVINCIA_ID INT
 );
 GO
 
--- Creación de la tabla Inmueble
 CREATE TABLE gd_esquema.Inmueble (
-    INMUEBLE_CODIGO INT PRIMARY KEY,
+    INMUEBLE_ID INT IDENTITY(1,1) PRIMARY KEY,
+    INMUEBLE_CODIGO INT,
     INMUEBLE_NOMBRE NVARCHAR(255),
     INMUEBLE_DESCRIPCION NVARCHAR(MAX),
     INMUEBLE_DIRECCION NVARCHAR(255),
-    INMUEBLE_SUPERFICIETOTAL DECIMAL(10, 2),
+    INMUEBLE_SUPERFICIE_TOTAL DECIMAL(10, 2),
     INMUEBLE_ANTIGUEDAD INT,
     INMUEBLE_EXPENSAS DECIMAL(10, 2),
     INMUEBLE_CARACTERISTICA_WIFI BIT,
     INMUEBLE_CARACTERISTICA_CABLE BIT,
     INMUEBLE_CARACTERISTICA_CALEFACCION BIT,
     INMUEBLE_CARACTERISTICA_GAS BIT,
-    INMUEBLE_BARRIO NVARCHAR(255),
-    INMUEBLE_LOCALIDAD NVARCHAR(255),
-    INMUEBLE_PROVINCIA NVARCHAR(255),
-    INMUEBLE_TIPO_INMUEBLE NVARCHAR(255),
-    PROPIETARIO_DNI NVARCHAR(20),
-    INMUEBLE_CANT_AMBIENTES INT,
-    INMUEBLE_ORIENTACION NVARCHAR(255),
-    INMUEBLE_DISPOSICION NVARCHAR(255),
-    INMUEBLE_ESTADO NVARCHAR(255)
+    INMUEBLE_BARRIO_ID INT,
+    INMUEBLE_LOCALIDAD_ID INT,
+    INMUEBLE_PROVINCIA_ID INT,
+    INMUEBLE_TIPO_INMUEBLE_ID INT,
+    INMUEBLE_PROPIETARIO_ID INT,
+    INMUEBLE_CANT_AMBIENTES_ID INT,
+    INMUEBLE_ORIENTACION_ID INT,
+    INMUEBLE_DISPOSICION_ID INT,
+    INMUEBLE_ESTADO_ID INT
 );
 GO
 
--- Creación de la tabla Propietario
 CREATE TABLE gd_esquema.Propietario (
-    PROPIETARIO_DNI NVARCHAR(20) PRIMARY KEY,
+    PROPIETARIO_ID INT IDENTITY(1,1) PRIMARY KEY,
+    PROPIETARIO_DNI NVARCHAR(20),
     PROPIETARIO_NOMBRE NVARCHAR(255),
     PROPIETARIO_APELLIDO NVARCHAR(255),
     PROPIETARIO_FECHA_REGISTRO DATETIME,
@@ -51,9 +50,9 @@ CREATE TABLE gd_esquema.Propietario (
 );
 GO
 
--- Creación de la tabla Agente
 CREATE TABLE gd_esquema.Agente (
-    AGENTE_DNI NVARCHAR(20) PRIMARY KEY,
+    AGENTE_ID INT IDENTITY(1,1) PRIMARY KEY,
+    AGENTE_DNI NVARCHAR(20),
     AGENTE_NOMBRE NVARCHAR(255),
     AGENTE_APELLIDO NVARCHAR(255),
     AGENTE_FECHA_REGISTRO DATETIME,
@@ -63,54 +62,50 @@ CREATE TABLE gd_esquema.Agente (
 );
 GO
 
--- Creación de la tabla Tipo_Operacion
 CREATE TABLE gd_esquema.Tipo_Operacion (
-    TIPO_OPERACION_CODIGO INT PRIMARY KEY,
+    TIPO_OPERACION_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_OPERACION_NOMBRE NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Moneda
 CREATE TABLE gd_esquema.Moneda (
-    MONEDA_CODIGO INT PRIMARY KEY,
+    MONEDA_ID INT IDENTITY(1,1) PRIMARY KEY,
     MONEDA_NOMBRE NVARCHAR(255)
     CONSTRAINT UQ_MONEDA_NOMBRE UNIQUE(MONEDA_NOMBRE)
 );
-GO
 
--- Creación de la tabla Alquiler
 CREATE TABLE gd_esquema.Alquiler (
-    ALQUILER_CODIGO INT PRIMARY KEY,
+    ALQUILER_ID INT IDENTITY(1,1) PRIMARY KEY,
+    ALQUILER_CODIGO INT,
     ALQUILER_FECHA_INICIO DATETIME,
     ALQUILER_FECHA_FIN DATETIME,
     ALQUILER_CANT_PERIODOS INT,
     ALQUILER_DEPOSITO DECIMAL(10, 2),
     ALQUILER_COMISION DECIMAL(10, 2),
     ALQUILER_GASTOS_AVERIGUA DECIMAL(10, 2),
-    INQUILINO_DNI NVARCHAR(20),
-    ALQUILER_ESTADO NVARCHAR(255)
+    INQUILINO_ID INT,
+    ALQUILER_ESTADO NVARCHAR(255),
+    ALQUILER_DETALLE_IMPORTE_ID INT
 );
 GO
 
--- Creación de la tabla Venta
 CREATE TABLE gd_esquema.Venta (
-    VENTA_CODIGO INT PRIMARY KEY,
+    VENTA_ID INT PRIMARY KEY,
     VENTA_FECHA DATETIME,
     VENTA_PRECIO_VENTA DECIMAL(10, 2),
     VENTA_COMISION DECIMAL(10, 2),
-    COMPRADOR_DNI NVARCHAR(20),
-    VENTA_MONEDA INT
+    COMPRADOR_ID INT,
+    VENTA_MONEDA_ID INT
 );
 GO
 
 CREATE TABLE gd_esquema.Medio_Pago (
-    MEDIO_PAGO_ID INT PRIMARY KEY,
+    MEDIO_PAGO_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_MEDIO_PAGO NVARCHAR(30)
 )
 
--- Creación de la tabla Pago_Alquiler
 CREATE TABLE gd_esquema.Pago_Alquiler (
-    PAGO_ALQUILER_CODIGO INT PRIMARY KEY,
+    PAGO_ALQUILER_ID INT PRIMARY KEY,
     PAGO_ALQUILER_FECHA DATETIME,
     PAGO_ALQUILER_FECHA_VENCIMIENTO DATETIME,
     PAGO_ALQUILER_NRO_PERIODO INT,
@@ -118,13 +113,12 @@ CREATE TABLE gd_esquema.Pago_Alquiler (
     PAGO_ALQUILER_FEC_INI DATETIME,
     PAGO_ALQUILER_FEC_FIN DATETIME,
     PAGO_ALQUILER_IMPORTE DECIMAL(10, 2),
-    PAGO_ALQUILER_MEDIO_PAGO INT
+    PAGO_ALQUILER_MEDIO_PAGO_ID INT
 );
 GO
 
--- Creación de la tabla Pago_Venta
 CREATE TABLE gd_esquema.Pago_Venta (
-    PAGO_VENTA_CODIGO INT IDENTITY(1,1) PRIMARY KEY,
+    PAGO_VENTA_ID INT IDENTITY(1,1) PRIMARY KEY,
     PAGO_VENTA_IMPORTE DECIMAL(10, 2),
     PAGO_VENTA_MONEDA INT,
     PAGO_VENTA_COTIZACION DECIMAL(10, 2),
@@ -132,19 +126,17 @@ CREATE TABLE gd_esquema.Pago_Venta (
 );
 GO
 
--- Creación de la tabla Detalle_Importe
 CREATE TABLE gd_esquema.Detalle_Importe (
-    DETALLE_IMPORTE_CODIGO INT PRIMARY KEY,
-    DETALLE_IMPORTE_ALQUILER INT,
+    DETALLE_IMPORTE_ID INT IDENTITY(1,1) PRIMARY KEY,
     DETALLE_IMPORTE_PERIODO_INI DATETIME,
     DETALLE_IMPORTE_PERIODO_FIN DATETIME,
     DETALLE_IMPORTE_PRECIO DECIMAL(10, 2)
 );
 GO
 
--- Creación de la tabla Comprador
 CREATE TABLE gd_esquema.Comprador (
-    COMPRADOR_DNI NVARCHAR(20) PRIMARY KEY,
+    COMPRADOR_ID INT IDENTITY(1,1) PRIMARY KEY,
+    COMPRADOR_DNI NVARCHAR(20),
     COMPRADOR_NOMBRE NVARCHAR(255),
     COMPRADOR_APELLIDO NVARCHAR(255),
     COMPRADOR_FECHA_REGISTRO DATETIME,
@@ -154,9 +146,9 @@ CREATE TABLE gd_esquema.Comprador (
 );
 GO
 
--- Creación de la tabla Inquilino
 CREATE TABLE gd_esquema.Inquilino (
-    INQUILINO_DNI NVARCHAR(20) PRIMARY KEY,
+    INQUILINO_ID INT IDENTITY(1,1) PRIMARY KEY,
+    INQUILINO_DNI NVARCHAR(20),
     INQUILINO_NOMBRE NVARCHAR(255),
     INQUILINO_APELLIDO NVARCHAR(255),
     INQUILINO_FECHA_REGISTRO DATETIME,
@@ -166,200 +158,173 @@ CREATE TABLE gd_esquema.Inquilino (
 );
 GO
 
--- Creación de la tabla Tipo_Inmueble
 CREATE TABLE gd_esquema.Tipo_Inmueble (
-    TIPO_INMUEBLE_CODIGO INT PRIMARY KEY,
+    TIPO_INMUEBLE_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_INMUEBLE_TIPO NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Provincia
 CREATE TABLE gd_esquema.Provincia (
-    PROVINCIA_CODIGO INT PRIMARY KEY,
+    PROVINCIA_ID INT IDENTITY(1,1) PRIMARY KEY,
     PROVINCIA_NOMBRE NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Localidad
 CREATE TABLE gd_esquema.Localidad (
-    LOCALIDAD_CODIGO INT PRIMARY KEY,
+    LOCALIDAD_ID INT IDENTITY(1,1) PRIMARY KEY,
     LOCALIDAD_NOMBRE NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Barrio
 CREATE TABLE gd_esquema.Barrio (
-    BARRIO_CODIGO INT PRIMARY KEY,
+    BARRIO_ID INT IDENTITY(1,1) PRIMARY KEY,
     BARRIO_NOMBRE NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla BarriosPorLocalidad
-CREATE TABLE gd_esquema.BarriosPorLocalidad (
-    LOCALIDAD_CODIGO INT,
-    BARRIO_CODIGO INT
-);
-GO
-
--- Creación de la tabla Ambientes
 CREATE TABLE gd_esquema.Ambientes (
-    AMBIENTES_CODIGO INT PRIMARY KEY,
-    AMBIENTES_CANTIDAD INT
+    AMBIENTES_ID INT IDENTITY(1,1) PRIMARY KEY,
+    AMBIENTES_CANTIDAD NVARCHAR(40)
 );
 GO
 
--- Creación de la tabla Disposicion
 CREATE TABLE gd_esquema.Disposicion (
-    DISPOSICION_CODIGO INT PRIMARY KEY,
+    DISPOSICION_ID INT IDENTITY(1,1) PRIMARY KEY,
     DISPOSICION_UBICACION NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Orientacion
 CREATE TABLE gd_esquema.Orientacion (
-    ORIENTACION_CODIGO INT PRIMARY KEY,
+    ORIENTACION_ID INT IDENTITY(1,1) PRIMARY KEY,
     ORIENTACION_CARDINAL NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Estado_Inmueble
 CREATE TABLE gd_esquema.Estado_Inmueble (
-    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Estado_Anuncio
 CREATE TABLE gd_esquema.Estado_Anuncio (
-    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Tipo_Periodo
 CREATE TABLE gd_esquema.Tipo_Periodo (
-    TIPO_PERIODO_CODIGO INT PRIMARY KEY,
+    TIPO_PERIODO_ID INT IDENTITY(1,1) PRIMARY KEY,
     TIPO_PERIODO_TIPO NVARCHAR(255)
 );
 GO
 
--- Creación de la tabla Estado_Alquiler
 CREATE TABLE gd_esquema.Estado_Alquiler (
-    ESTADO_CODIGO INT PRIMARY KEY,
+    ESTADO_ID INT IDENTITY(1,1) PRIMARY KEY,
     ESTADO_TIPO NVARCHAR(255)
 );
 GO
 
--- Creación de las tablas intermedias para relaciones muchos a muchos (por ejemplo, Alquiler_Tipo_Operacion)
-CREATE TABLE gd_esquema.Alquiler_Tipo_Operacion (
-    ALQUILER_CODIGO INT,
-    TIPO_OPERACION_CODIGO INT
-);
-GO
-
--- Creación de las tablas intermedias para relaciones muchos a muchos (por ejemplo, Alquiler_Moneda)
-CREATE TABLE gd_esquema.Alquiler_Moneda (
-    ALQUILER_CODIGO INT,
-    MONEDA_CODIGO INT
-);
-GO
-
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (PROPIETARIO_DNI) REFERENCES gd_esquema.Propietario(PROPIETARIO_DNI);
+ADD FOREIGN KEY (INMUEBLE_PROPIETARIO_ID) REFERENCES gd_esquema.Propietario(PROPIETARIO_ID);
 GO
 
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_TIPO_INMUEBLE) REFERENCES gd_esquema.Tipo_Inmueble(TIPO_INMUEBLE_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_TIPO_INMUEBLE_ID) REFERENCES gd_esquema.Tipo_Inmueble(TIPO_INMUEBLE_ID);
 GO
 
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_LOCALIDAD) REFERENCES gd_esquema.Localidad(LOCALIDAD_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_LOCALIDAD_ID) REFERENCES gd_esquema.Localidad(LOCALIDAD_ID);
 GO
 
--- Definición de claves foráneas para relaciones
-ALTER TABLE gd_esquema.BarriosPorLocalidad
-ADD FOREIGN KEY (LOCALIDAD_CODIGO) REFERENCES gd_esquema.Localidad(LOCALIDAD_CODIGO);
-GO
-
--- Definición de claves foráneas para relaciones
-ALTER TABLE gd_esquema.BarriosPorLocalidad
-ADD FOREIGN KEY (BARRIO_CODIGO) REFERENCES gd_esquema.Barrio(BARRIO_CODIGO);
-GO
-
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_ESTADO) REFERENCES gd_esquema.Estado_Inmueble(ESTADO_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_DISPOSICION_ID) REFERENCES gd_esquema.Disposicion(DISPOSICION_ID);
 GO
 
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Inmueble
-ADD FOREIGN KEY (INMUEBLE_ORIENTACION) REFERENCES gd_esquema.Orientacion(ORIENTACION_CODIGO);
+ADD FOREIGN KEY (INMUEBLE_ORIENTACION_ID) REFERENCES gd_esquema.Orientacion(ORIENTACION_ID);
 GO
 
--- Definición de claves foráneas para relaciones
+ALTER TABLE gd_esquema.Inmueble
+ADD FOREIGN KEY (INMUEBLE_ESTADO_ID) REFERENCES gd_esquema.Estado_Inmueble(ESTADO_ID);
+GO
+
 ALTER TABLE gd_esquema.Alquiler
-ADD FOREIGN KEY (INQUILINO_DNI) REFERENCES gd_esquema.Inquilino(INQUILINO_DNI);
+ADD FOREIGN KEY (INQUILINO_ID) REFERENCES gd_esquema.Inquilino(INQUILINO_ID);
 GO
 
--- Definición de claves foráneas para relaciones
+ALTER TABLE gd_esquema.Alquiler
+ADD FOREIGN KEY (ALQUILER_DETALLE_IMPORTE_ID) REFERENCES gd_esquema.Detalle_Importe(DETALLE_IMPORTE_ID);
+GO
+
 ALTER TABLE gd_esquema.Venta
-ADD FOREIGN KEY (COMPRADOR_DNI) REFERENCES gd_esquema.Comprador(COMPRADOR_DNI);
+ADD FOREIGN KEY (COMPRADOR_ID) REFERENCES gd_esquema.Comprador(COMPRADOR_ID);
 GO
 
 ALTER TABLE gd_esquema.Pago_Alquiler
-ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_ID);
+ADD FOREIGN KEY (PAGO_ALQUILER_MEDIO_PAGO_ID) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_ID);
 
--- Definición de claves foráneas para relaciones
 ALTER TABLE gd_esquema.Pago_Venta
 ADD FOREIGN KEY (PAGO_VENTA_MEDIO_PAGO) REFERENCES gd_esquema.Medio_Pago(MEDIO_PAGO_ID);
 GO
 
--- Define las claves foráneas para las demás relaciones entre tablas
-
--- Creación de Stored Procedures para migrar datos
-
--- Stored Procedure para migrar datos de la tabla Sucursal
 CREATE PROCEDURE gd_esquema.MigrarDatosSucursal AS
 BEGIN
     INSERT INTO gd_esquema.Sucursal (
         SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
-        SUCURSAL_LOCALIDAD, SUCURSAL_PROVINCIA
+        SUCURSAL_LOCALIDAD_ID, SUCURSAL_PROVINCIA_ID
     )
-    SELECT
+     SELECT DISTINCT
         SUCURSAL_CODIGO, SUCURSAL_NOMBRE, SUCURSAL_DIRECCION, SUCURSAL_TELEFONO,
-        SUCURSAL_LOCALIDAD, SUCURSAL_PROVINCIA
-    FROM Maestra;
+        LOCALIDAD_ID, PROVINCIA_ID
+    FROM Maestra m
+        JOIN gd_esquema.Localidad l
+            on l.LOCALIDAD_NOMBRE = m.SUCURSAL_LOCALIDAD
+        JOIN gd_esquema.Provincia p
+            on p.PROVINCIA_NOMBRE = m.SUCURSAL_PROVINCIA
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Inmueble
 CREATE PROCEDURE gd_esquema.MigrarDatosInmueble AS
 BEGIN
     INSERT INTO gd_esquema.Inmueble (
         INMUEBLE_CODIGO, INMUEBLE_NOMBRE, INMUEBLE_DESCRIPCION, INMUEBLE_DIRECCION,
-        INMUEBLE_SUPERFICIETOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPENSAS,
+        INMUEBLE_SUPERFICIE_TOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPENSAS,
         INMUEBLE_CARACTERISTICA_WIFI, INMUEBLE_CARACTERISTICA_CABLE,
         INMUEBLE_CARACTERISTICA_CALEFACCION, INMUEBLE_CARACTERISTICA_GAS,
-        INMUEBLE_BARRIO, INMUEBLE_LOCALIDAD, INMUEBLE_PROVINCIA,
-        INMUEBLE_TIPO_INMUEBLE, PROPIETARIO_DNI, INMUEBLE_CANT_AMBIENTES,
-        INMUEBLE_ORIENTACION, INMUEBLE_DISPOSICION, INMUEBLE_ESTADO
+        INMUEBLE_BARRIO_ID, INMUEBLE_LOCALIDAD_ID, INMUEBLE_PROVINCIA_ID,
+        INMUEBLE_TIPO_INMUEBLE_ID, INMUEBLE_PROPIETARIO_ID, INMUEBLE_CANT_AMBIENTES_ID,
+        INMUEBLE_ORIENTACION_ID, INMUEBLE_DISPOSICION_ID, INMUEBLE_ESTADO_ID
     )
     SELECT
         INMUEBLE_CODIGO, INMUEBLE_NOMBRE, INMUEBLE_DESCRIPCION, INMUEBLE_DIRECCION,
         INMUEBLE_SUPERFICIETOTAL, INMUEBLE_ANTIGUEDAD, INMUEBLE_EXPESAS,
         INMUEBLE_CARACTERISTICA_WIFI, INMUEBLE_CARACTERISTICA_CABLE,
         INMUEBLE_CARACTERISTICA_CALEFACCION, INMUEBLE_CARACTERISTICA_GAS,
-        INMUEBLE_BARRIO, INMUEBLE_LOCALIDAD, INMUEBLE_PROVINCIA,
-        INMUEBLE_TIPO_INMUEBLE, PROPIETARIO_DNI, INMUEBLE_CANT_AMBIENTES,
-        INMUEBLE_ORIENTACION, INMUEBLE_DISPOSICION, INMUEBLE_ESTADO
-    FROM Maestra;
+        BARRIO_ID, LOCALIDAD_ID, PROVINCIA_ID,
+        TIPO_INMUEBLE_ID, PROPIETARIO_ID, AMBIENTES_ID,
+        ORIENTACION_ID, DISPOSICION_ID, ESTADO_ID
+    FROM Maestra m
+        JOIN gd_esquema.Propietario p
+            ON p.PROPIETARIO_DNI = m.PROPIETARIO_DNI AND p.PROPIETARIO_FECHA_NAC = m.PROPIETARIO_FECHA_NAC
+        JOIN gd_esquema.Tipo_Inmueble t
+            ON t.TIPO_INMUEBLE_TIPO = m.INMUEBLE_TIPO_INMUEBLE
+        JOIN gd_esquema.Ambientes amb
+            ON amb.AMBIENTES_CANTIDAD = m.INMUEBLE_CANT_AMBIENTES
+        JOIN gd_esquema.Estado_Inmueble est
+            ON est.ESTADO_TIPO = m.INMUEBLE_ESTADO
+        JOIN gd_esquema.Orientacion o
+            ON o.ORIENTACION_CARDINAL = m.INMUEBLE_ORIENTACION
+        JOIN gd_esquema.Disposicion d
+            ON d.DISPOSICION_UBICACION = m.INMUEBLE_DISPOSICION
+        JOIN gd_esquema.Provincia prov
+            ON prov.PROVINCIA_NOMBRE = m.INMUEBLE_PROVINCIA
+        JOIN gd_esquema.Localidad l
+            ON l.LOCALIDAD_NOMBRE = m.INMUEBLE_LOCALIDAD
+        JOIN gd_esquema.Barrio b
+            ON b.BARRIO_NOMBRE = m.INMUEBLE_BARRIO
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Propietario
 CREATE PROCEDURE gd_esquema.MigrarDatosPropietario AS
 BEGIN
     INSERT INTO gd_esquema.Propietario (
@@ -367,7 +332,7 @@ BEGIN
         PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
         PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
     )
-    SELECT
+    SELECT DISTINCT
         PROPIETARIO_DNI, PROPIETARIO_NOMBRE, PROPIETARIO_APELLIDO,
         PROPIETARIO_FECHA_REGISTRO, PROPIETARIO_TELEFONO,
         PROPIETARIO_MAIL, PROPIETARIO_FECHA_NAC
@@ -375,53 +340,61 @@ BEGIN
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Alquiler
 CREATE PROCEDURE gd_esquema.MigrarDatosAlquiler AS
 BEGIN
     INSERT INTO gd_esquema.Alquiler (
         ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
         ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
-        ALQUILER_GASTOS_AVERIGUA, INQUILINO_DNI, ALQUILER_ESTADO
+        ALQUILER_GASTOS_AVERIGUA, INQUILINO_ID, ALQUILER_ESTADO
     )
-    SELECT
+    SELECT DISTINCT
         ALQUILER_CODIGO, ALQUILER_FECHA_INICIO, ALQUILER_FECHA_FIN,
         ALQUILER_CANT_PERIODOS, ALQUILER_DEPOSITO, ALQUILER_COMISION,
-        ALQUILER_GASTOS_AVERIGUA, INQUILINO_DNI, ALQUILER_ESTADO
-    FROM Maestra;
+        ALQUILER_GASTOS_AVERIGUA, INQUILINO_ID, ALQUILER_ESTADO
+    FROM Maestra m
+        JOIN gd_esquema.Inquilino i
+            ON i.INQUILINO_DNI = m.INQUILINO_DNI AND i.INQUILINO_FECHA_NAC = m.INQUILINO_FECHA_NAC
+        JOIN gd_esquema.Detalle_Importe d
+            ON d.DETALLE_IMPORTE_PERIODO_INI = m.DETALLE_ALQ_NRO_PERIODO_INI
+                AND d.DETALLE_IMPORTE_PERIODO_FIN = m.DETALLE_ALQ_NRO_PERIODO_FIN
+                AND d.DETALLE_IMPORTE_PRECIO = m.PAGO_ALQUILER_IMPORTE
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Venta
 CREATE PROCEDURE gd_esquema.MigrarDatosVenta AS
 BEGIN
     INSERT INTO gd_esquema.Venta (
-        VENTA_CODIGO, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
-        COMPRADOR_DNI, VENTA_MONEDA
+        VENTA_ID, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
+        COMPRADOR_ID, VENTA_MONEDA_ID
     )
-    SELECT
+    SELECT DISTINCT
         VENTA_CODIGO, VENTA_FECHA, VENTA_PRECIO_VENTA, VENTA_COMISION,
-        COMPRADOR_DNI, VENTA_MONEDA
-    FROM Maestra;
+        COMPRADOR_ID, MONEDA_ID
+    FROM gd_esquema.Maestra m
+        JOIN gd_esquema.Moneda mon
+            ON mon.MONEDA_NOMBRE = m.VENTA_MONEDA
+        JOIN gd_esquema.Comprador com
+            ON com.COMPRADOR_DNI = m.COMPRADOR_DNI AND com.COMPRADOR_FECHA_NAC = m.COMPRADOR_FECHA_NAC
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Pago_Alquiler
 CREATE PROCEDURE gd_esquema.MigrarDatosPagoAlquiler AS
 BEGIN
     INSERT INTO gd_esquema.Pago_Alquiler (
-        PAGO_ALQUILER_CODIGO, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
+        PAGO_ALQUILER_ID, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
         PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
-        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO
+        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO_ID
     )
     SELECT
         PAGO_ALQUILER_CODIGO, PAGO_ALQUILER_FECHA, PAGO_ALQUILER_FECHA_VENCIMIENTO,
         PAGO_ALQUILER_NRO_PERIODO, PAGO_ALQUILER_DESC, PAGO_ALQUILER_FEC_INI,
-        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, PAGO_ALQUILER_MEDIO_PAGO
-    FROM Maestra;
+        PAGO_ALQUILER_FEC_FIN, PAGO_ALQUILER_IMPORTE, MEDIO_PAGO_ID
+    FROM gd_esquema.Maestra m
+        JOIN gd_esquema.Medio_Pago med
+            ON med.TIPO_MEDIO_PAGO = m.PAGO_ALQUILER_MEDIO_PAGO
 END;
 GO
 
--- Stored Procedure para migrar datos de la tabla Pago_Venta
 CREATE PROCEDURE gd_esquema.MigrarDatosPagoVenta AS
 BEGIN
     INSERT INTO gd_esquema.Pago_Venta (
@@ -429,15 +402,16 @@ BEGIN
         PAGO_VENTA_COTIZACION, PAGO_VENTA_MEDIO_PAGO
     )
     SELECT
-        PAGO_VENTA_IMPORTE, PAGO_VENTA_MONEDA,
-        PAGO_VENTA_COTIZACION, PAGO_VENTA_MEDIO_PAGO
-    FROM Maestra;
+        PAGO_VENTA_IMPORTE, MONEDA_ID,
+        PAGO_VENTA_COTIZACION, MEDIO_PAGO_ID
+    FROM gd_esquema.Maestra m
+        JOIN gd_esquema.Moneda mon
+            ON mon.MONEDA_NOMBRE = m.VENTA_MONEDA
+        JOIN gd_esquema.Medio_Pago med
+            ON med.TIPO_MEDIO_PAGO = m.PAGO_VENTA_MEDIO_PAGO
 END;
 GO
 
--- Repite el proceso para otras tablas que necesitas migrar
-
--- Stored Procedure para migrar datos de la tabla Comprador
 CREATE PROCEDURE gd_esquema.MigrarDatosComprador AS
 BEGIN
     INSERT INTO gd_esquema.Comprador (
@@ -445,17 +419,14 @@ BEGIN
         COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
         COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
     )
-    SELECT
+    SELECT DISTINCT
         COMPRADOR_DNI, COMPRADOR_NOMBRE, COMPRADOR_APELLIDO,
         COMPRADOR_FECHA_REGISTRO, COMPRADOR_TELEFONO,
         COMPRADOR_MAIL, COMPRADOR_FECHA_NAC
-    FROM Maestra;
+    FROM Maestra WHERE COMPRADOR_DNI is not null;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Inquilino
 CREATE PROCEDURE gd_esquema.MigrarDatosInquilino AS
 BEGIN
     INSERT INTO gd_esquema.Inquilino (
@@ -463,167 +434,295 @@ BEGIN
         INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
         INQUILINO_MAIL, INQUILINO_FECHA_NAC
     )
-    SELECT
+    SELECT DISTINCT
         INQUILINO_DNI, INQUILINO_NOMBRE, INQUILINO_APELLIDO,
         INQUILINO_FECHA_REGISTRO, INQUILINO_TELEFONO,
         INQUILINO_MAIL, INQUILINO_FECHA_NAC
-    FROM Maestra;
+    FROM Maestra WHERE INQUILINO_DNI is not null;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Tipo_Operacion
--- TODO: aca no toy seguro que iria
 CREATE PROCEDURE gd_esquema.MigrarDatosTipoOperacion AS
 BEGIN
     INSERT INTO gd_esquema.Tipo_Operacion (
-        TIPO_OPERACION_CODIGO, TIPO_OPERACION_NOMBRE
+        TIPO_OPERACION_NOMBRE
     )
     SELECT
-        TIPO_OPERACION_CODIGO, TIPO_OPERACION_NOMBRE
+        DISTINCT ANUNCIO_TIPO_OPERACION
     FROM Maestra;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Moneda
 CREATE PROCEDURE gd_esquema.MigrarDatosMoneda AS
 BEGIN
     INSERT INTO gd_esquema.Moneda (
         MONEDA_NOMBRE
     )
-    SELECT DISTINCT MONEDA FROM
-        (SELECT DISTINCT VENTA_MONEDA as MONEDA FROM gd_esquema.Maestra
-        UNION ALL
+    SELECT DISTINCT MONEDA FROM (
+        SELECT DISTINCT VENTA_MONEDA as MONEDA FROM gd_esquema.Maestra
+            UNION ALL
         SELECT DISTINCT ANUNCIO_MONEDA FROM gd_esquema.Maestra
-        UNION ALL
-        SELECT DISTINCT PAGO_VENTA_MONEDA FROM gd_esquema.Maestra)
-    as MVMMAM WHERE MONEDA is not null;
+            UNION ALL
+        SELECT DISTINCT PAGO_VENTA_MONEDA FROM gd_esquema.Maestra
+    ) as MVMMAM;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Estado_Inmueble
 CREATE PROCEDURE gd_esquema.MigrarDatosEstadoInmueble AS
 BEGIN
     INSERT INTO gd_esquema.Estado_Inmueble (
-        ESTADO_CODIGO, ESTADO_TIPO
+        ESTADO_TIPO
     )
-    SELECT
-        ESTADO_CODIGO, ESTADO_TIPO
-    FROM Maestra;
+    SELECT DISTINCT
+        INMUEBLE_ESTADO
+    FROM Maestra
+        WHERE INMUEBLE_ESTADO is not null;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Estado_Anuncio
 CREATE PROCEDURE gd_esquema.MigrarDatosEstadoAnuncio AS
 BEGIN
     INSERT INTO gd_esquema.Estado_Anuncio (
-        ESTADO_CODIGO, ESTADO_TIPO
+        ESTADO_TIPO
     )
-    SELECT
-        ESTADO_CODIGO, ESTADO_TIPO
-    FROM Maestra;
+    SELECT DISTINCT ANUNCIO_ESTADO FROM gd_esquema.Maestra WHERE ANUNCIO_ESTADO is not null;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Tipo_Periodo
 CREATE PROCEDURE gd_esquema.MigrarDatosTipoPeriodo AS
 BEGIN
     INSERT INTO gd_esquema.Tipo_Periodo (
-        TIPO_PERIODO_CODIGO, TIPO_PERIODO_TIPO
+        TIPO_PERIODO_TIPO
     )
-    SELECT
-        TIPO_PERIODO_CODIGO, TIPO_PERIODO_TIPO
-    FROM Maestra;
+    SELECT DISTINCT
+        ANUNCIO_TIPO_PERIODO
+    FROM gd_esquema.Maestra;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Stored Procedure para migrar datos de la tabla Estado_Alquiler
 CREATE PROCEDURE gd_esquema.MigrarDatosEstadoAlquiler AS
 BEGIN
     INSERT INTO gd_esquema.Estado_Alquiler (
-        ESTADO_CODIGO, ESTADO_TIPO
+        ESTADO_TIPO
     )
-    SELECT
-        ESTADO_CODIGO, ESTADO_TIPO
+    SELECT DISTINCT
+        ALQUILER_ESTADO
     FROM Maestra;
 END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Ejecución de Stored Procedures para migrar datos
-
--- Ejecutar el Stored Procedure para la tabla Sucursal
-EXEC gd_esquema.MigrarDatosSucursal;
+CREATE PROCEDURE gd_esquema.MigrarDatosDisposicion AS
+BEGIN
+    INSERT INTO gd_esquema.Disposicion (
+        DISPOSICION_UBICACION
+    )
+    SELECT DISTINCT
+        INMUEBLE_DISPOSICION
+    FROM Maestra;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Inmueble
-EXEC gd_esquema.MigrarDatosInmueble;
+CREATE PROCEDURE gd_esquema.MigrarDatosAgente AS
+BEGIN
+    INSERT INTO gd_esquema.Agente (
+        AGENTE_DNI,
+        AGENTE_NOMBRE,
+        AGENTE_APELLIDO ,
+        AGENTE_FECHA_REGISTRO,
+        AGENTE_TELEFONO,
+        AGENTE_MAIL,
+        AGENTE_FECHA_NAC
+    )
+    SELECT DISTINCT
+        AGENTE_DNI,
+        AGENTE_NOMBRE,
+        AGENTE_APELLIDO ,
+        AGENTE_FECHA_REGISTRO,
+        AGENTE_TELEFONO,
+        AGENTE_MAIL,
+        AGENTE_FECHA_NAC
+    FROM Maestra;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Propietario
-EXEC gd_esquema.MigrarDatosPropietario;
+CREATE PROCEDURE gd_esquema.MigrarDatosAmbientes AS
+BEGIN
+    INSERT INTO gd_esquema.Ambientes (
+        AMBIENTES_CANTIDAD
+    )
+    SELECT DISTINCT
+        INMUEBLE_CANT_AMBIENTES
+    FROM Maestra;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Alquiler
-EXEC gd_esquema.MigrarDatosAlquiler;
+CREATE PROCEDURE gd_esquema.MigrarDatosProvincia AS
+BEGIN
+    INSERT INTO gd_esquema.Provincia (
+        PROVINCIA_NOMBRE
+    )
+    SELECT DISTINCT PROVINCIA FROM
+        (SELECT DISTINCT INMUEBLE_PROVINCIA as PROVINCIA FROM gd_esquema.Maestra
+        UNION ALL
+        SELECT DISTINCT SUCURSAL_PROVINCIA FROM gd_esquema.Maestra)
+    as P;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Venta
-EXEC gd_esquema.MigrarDatosVenta;
+CREATE PROCEDURE gd_esquema.MigrarDatosLocalidad AS
+BEGIN
+    INSERT INTO gd_esquema.Localidad (
+        LOCALIDAD_NOMBRE
+    )
+    SELECT DISTINCT LOCALIDAD FROM
+        (SELECT DISTINCT INMUEBLE_LOCALIDAD as LOCALIDAD FROM gd_esquema.Maestra
+        UNION ALL
+        SELECT DISTINCT SUCURSAL_LOCALIDAD FROM gd_esquema.Maestra)
+    as L;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Pago_Alquiler
-EXEC gd_esquema.MigrarDatosPagoAlquiler;
+CREATE PROCEDURE gd_esquema.MigrarDatosBarrio AS
+BEGIN
+    INSERT INTO gd_esquema.Barrio (
+        BARRIO_NOMBRE
+    )
+    SELECT DISTINCT
+        INMUEBLE_BARRIO
+    FROM gd_esquema.Maestra
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Pago_Venta
-EXEC gd_esquema.MigrarDatosPagoVenta;
+CREATE PROCEDURE gd_esquema.MigrarRelacionLocalidadProvincia AS
+BEGIN
+    INSERT INTO gd_esquema.Barrio (
+        BARRIO_NOMBRE
+    )
+    SELECT DISTINCT
+        INMUEBLE_BARRIO
+    FROM gd_esquema.Maestra
+END;
 GO
 
--- Repite el proceso para otras tablas
-
--- Ejecutar el Stored Procedure para la tabla Comprador
-EXEC gd_esquema.MigrarDatosComprador;
+CREATE PROCEDURE gd_esquema.MigrarDetalleImporteAlquiler AS
+BEGIN
+    INSERT INTO gd_esquema.Detalle_Importe (
+        DETALLE_IMPORTE_PERIODO_INI,
+        DETALLE_IMPORTE_PERIODO_FIN,
+        DETALLE_IMPORTE_PRECIO
+    )
+SELECT DISTINCT
+    DETALLE_ALQ_NRO_PERIODO_INI,
+    DETALLE_ALQ_NRO_PERIODO_FIN,
+    DETALLE_ALQ_PRECIO
+FROM gd_esquema.Maestra m
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Inquilino
-EXEC gd_esquema.MigrarDatosInquilino;
+CREATE PROCEDURE gd_esquema.MigrarMediosPago AS
+BEGIN
+    INSERT INTO gd_esquema.Medio_Pago (
+        TIPO_MEDIO_PAGO
+    )
+    SELECT DISTINCT MEDIO_PAGO FROM
+        (SELECT DISTINCT PAGO_VENTA_MEDIO_PAGO as MEDIO_PAGO FROM gd_esquema.Maestra
+        UNION ALL
+        SELECT DISTINCT PAGO_ALQUILER_MEDIO_PAGO as MEDIO_PAGO FROM gd_esquema.Maestra)
+    as M;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Tipo_Operacion
-EXEC gd_esquema.MigrarDatosTipoOperacion;
+CREATE PROCEDURE gd_esquema.MigrarOrientacion AS
+BEGIN
+    INSERT INTO gd_esquema.Orientacion (
+        ORIENTACION_CARDINAL
+    )
+    SELECT DISTINCT INMUEBLE_ORIENTACION FROM Maestra;
+END;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Moneda
+CREATE PROCEDURE gd_esquema.MigrarTipoInmueble AS
+BEGIN
+    INSERT INTO gd_esquema.Tipo_Inmueble (
+        TIPO_INMUEBLE_TIPO
+    )
+    SELECT DISTINCT INMUEBLE_TIPO_INMUEBLE FROM Maestra;
+END;
+GO
+
+EXEC gd_esquema.MigrarDetalleImporteAlquiler;
+GO
+
+EXEC gd_esquema.MigrarTipoInmueble;
+GO
+
+EXEC gd_esquema.MigrarOrientacion;
+GO
+
+EXEC gd_esquema.MigrarMediosPago;
+GO
+
+EXEC gd_esquema.MigrarDatosProvincia;
+GO
+
+EXEC gd_esquema.MigrarDatosLocalidad;
+GO
+
+EXEC gd_esquema.MigrarDatosBarrio;
+GO
+
+EXEC gd_esquema.MigrarDatosAmbientes;
+GO
+
+EXEC gd_esquema.MigrarDatosDisposicion;
+GO
+
+EXEC gd_esquema.MigrarDatosAgente;
+GO
+
 EXEC gd_esquema.MigrarDatosMoneda;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Estado_Inmueble
+EXEC gd_esquema.MigrarDatosComprador;
+GO
+
+EXEC gd_esquema.MigrarDatosInquilino;
+GO
+
+EXEC gd_esquema.MigrarDatosTipoOperacion;
+GO
+
 EXEC gd_esquema.MigrarDatosEstadoInmueble;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Estado_Anuncio
 EXEC gd_esquema.MigrarDatosEstadoAnuncio;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Tipo_Periodo
 EXEC gd_esquema.MigrarDatosTipoPeriodo;
 GO
 
--- Ejecutar el Stored Procedure para la tabla Estado_Alquiler
 EXEC gd_esquema.MigrarDatosEstadoAlquiler;
+GO
+
+EXEC gd_esquema.MigrarDatosSucursal;
+GO
+
+EXEC gd_esquema.MigrarDatosVenta;
+GO
+
+EXEC gd_esquema.MigrarDatosPagoAlquiler;
+GO
+
+EXEC gd_esquema.MigrarDatosPagoVenta;
+GO
+
+EXEC gd_esquema.MigrarDatosPropietario;
+GO
+
+EXEC gd_esquema.MigrarDatosAlquiler;
+GO
+
+EXEC gd_esquema.MigrarDatosInmueble;
 GO
 
 COMMIT;
